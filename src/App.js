@@ -9,8 +9,8 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path='/main' component={MainPage}/>
-        <Route exact path='/search' component={SearchPage}/>
+        <Route exact path='/' component={MainPage}/>
+        <Route path='/search' component={SearchPage}/>
       </div>
     )
   }

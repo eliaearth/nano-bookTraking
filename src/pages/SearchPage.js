@@ -6,7 +6,7 @@ class SearchPage extends React.Component {
         return (
             <div className="search-books">
                 <div className="search-books-bar">
-                    <Link to='/main' className="close-search">Close</Link>
+                    <Link to='/' className="close-search">Close</Link>
                     <div className="search-books-input-wrapper">
                         {/*
                         NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -23,7 +23,7 @@ class SearchPage extends React.Component {
                 <div className="search-books-results">
                     <ol className="books-grid"></ol>
                 </div>
-            </div>            
+            </div>           
         )
     }
 }
