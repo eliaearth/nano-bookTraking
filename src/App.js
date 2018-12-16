@@ -10,15 +10,26 @@ class BooksApp extends React.Component {
     books : []
   }
 
-  changeShelfHandler(newShelf, bookId){
+  changeShelfHandler(newShelfType, bookId){
     const newBooks = this.state.books.map((book) => { 
-      if ( book.id === bookId ) book.shelf = newShelf;
+      if ( book.id === bookId ) {
+        book.shelf = newShelfType;
+        BooksAPI.update(book, newShelfType)
+          .then((response) => {
+              console.info('update book');
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+      
       return book;
     })
   
     this.setState((prevState) => ({
       books: newBooks
     }));
+    
   }
 
 
@@ -29,7 +40,7 @@ class BooksApp extends React.Component {
           books: response
         });
       })
-      .catch(() => {})
+      .catch((err) => {console.error(err);})
   }
   render() {
     return (
