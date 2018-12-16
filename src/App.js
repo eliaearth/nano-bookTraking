@@ -9,6 +9,19 @@ class BooksApp extends React.Component {
   state = {
     books : []
   }
+
+  changeShelfHandler(newShelf, bookId){
+    const newBooks = this.state.books.map((book) => { 
+      if ( book.id === bookId ) book.shelf = newShelf;
+      return book;
+    })
+  
+    this.setState((prevState) => ({
+      books: newBooks
+    }));
+  }
+
+
   componentDidMount(){
     BooksAPI.getAll()
       .then((response) => {
@@ -21,7 +34,9 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route exact path='/' render={() => (<MainPage books={this.state.books}/>)}/>
+        <Route exact path='/' render={() => (
+          <MainPage books={this.state.books} 
+            changeShelfHandler={(x,y) => this.changeShelfHandler(x,y)}/>)}/>
         <Route path='/search' render={() => (<SearchPage books={this.state.books}/>)}/>
       </div>
     )

@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Shelf from './../components/Shelf'
-import {READING,WANTED,READ} from './../constants/shelfType'
 import {shelves} from './../constants/shelfType'
 
 class MainPage extends React.Component {
     render() {
+        const { books, changeShelfHandler } =  this.props;
         return (
             <div className="list-books">
                 <div className="list-books-title">
@@ -13,7 +13,10 @@ class MainPage extends React.Component {
                 </div>
                 <div className="list-books-content">
                     <div>
-                        {shelves.map((shelf) => (<Shelf key={shelf.type} shelfInfo={shelf} shelfBooks={this.props.books}/>))}
+                        {shelves.map((shelf) => (<Shelf key={shelf.type} 
+                                                    shelfInfo={shelf} 
+                                                    shelfBooks={books}
+                                                    changeShelfHandler={changeShelfHandler}/>))}
                     </div>
                 </div>
                 <div className="open-search">
