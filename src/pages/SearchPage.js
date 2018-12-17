@@ -1,27 +1,56 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import Search from "../components/Search";
+import BookInfo from "../components/BookInfo";
+import * as BooksAPI from "../BooksAPI";
 
 class SearchPage extends React.Component {
+    state = {
+        searchedBooks :[]
+    };
+
+    componentDidMount(){
+        this.searchBook('');
+    }
+
+    searchBook(filterTerm){
+        BooksAPI.search(filterTerm)
+            .then((response) => {
+                debugger;
+                const result = response
+                    ? (typeof response === "string" ?  [] : response )
+                    : [];
+                this.setState({
+                    searchedBooks: result
+                });
+            }, (error) => {
+                debugger;
+                console.log('error getting books filtered')
+            })
+            .catch((err) => {
+                debugger;
+                console.error(err);
+            })
+    }
+
+    handleChangeFilter(filter){
+        this.searchBook(filter);
+    }
+
     render() {
         return (
             <div className="search-books">
-                <div className="search-books-bar">
-                    <Link to='/' className="close-search">Close</Link>
-                    <div className="search-books-input-wrapper">
-                        {/*
-                        NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                        You can find these search terms here:
-                        https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                        However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                        you don't find a specific author or title. Every search is limited by search terms.
-                        */}
-                        <input type="text" placeholder="Search by title or author"/>
-
-                    </div>
-                </div>
+                <Search onChange={(filter) => this.handleChangeFilter(filter)}/>
                 <div className="search-books-results">
-                    <ol className="books-grid"></ol>
+                    <ol className="books-grid">
+                        {
+                            this.state.searchedBooks.map((book) => (
+                                <li key={book.id}>
+                                    <BookInfo bookInfo={book}
+                                              currentShelf={{type: book.shelf, title: book.shelf}}
+                                              changeShelfHandler={this.props.changeShelfHandler}/>
+                                </li>))
+                        }
+                    </ol>
                 </div>
             </div>           
         )
