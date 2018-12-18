@@ -4,7 +4,7 @@ import BookInfo from './BookInfo'
 class Shelf extends React.Component {
     render() {
         const { shelfInfo, shelfBooks, changeShelfHandler } = this.props;
-        const filteredBooks = shelfBooks.filter((book) => (book.shelf.toLowerCase() === shelfInfo.type));
+        const filteredBooks = shelfBooks ? shelfBooks.filter((book) => (book.shelf === shelfInfo.type)) : [];
         return (
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{shelfInfo.title}</h2>

@@ -8,28 +8,27 @@ import SearchPage from './pages/SearchPage'
 class BooksApp extends React.Component {
   state = {
     books : []
-  }
+  };
 
-  changeShelfHandler(newShelfType, bookId){
-    const newBooks = this.state.books.map((book) => { 
-      if ( book.id === bookId ) {
-        book.shelf = newShelfType;
-        BooksAPI.update(book, newShelfType)
-          .then((response) => {
-              console.info('update book');
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-      
-      return book;
-    })
-  
-    this.setState((prevState) => ({
+  changeShelfHandler(newShelfType, book){
+    const findBook = this.state.books.find((b) => b.id === book.id);
+    let newBooks;
+    if ( findBook ){
+        newBooks = this.state.books.map((b) => {
+                                if ( b.id === book.id ) {
+                                  b.shelf = newShelfType;
+                                }
+                                return b;
+                            });
+
+    }else{
+        const newBook = { ...book, shelf :newShelfType};
+        newBooks = [...this.state.books, newBook];
+    }
+
+    this.setState({
       books: newBooks
-    }));
-    
+    });
   }
 
   getAllBooks(){
@@ -53,11 +52,10 @@ class BooksApp extends React.Component {
             <MainPage books={this.state.books}
                changeShelfHandler={(x,y) => this.changeShelfHandler(x,y)}/>)}
         />
-        <Route path='/search' render={({history}) => (
+        <Route path='/search' render={() => (
             <SearchPage books={this.state.books}
-               changeShelfHandler={(x,y) => {
-                   this.changeShelfHandler(x,y);
-                   history.push('/');
+               changeShelfHandler={(shelfType,book) => {
+                   this.changeShelfHandler(shelfType,book);
                  }}/>)}
         />
       </div>

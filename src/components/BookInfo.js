@@ -6,11 +6,11 @@ import './../App.css'
 class BookInfo extends React.Component {
     changeShelf(event){
         if ( this.props.currentShelf.type !== event.target.value){
-            this.props.changeShelfHandler(event.target.value, this.props.bookInfo.id);
+            this.props.changeShelfHandler(event.target.value, this.props.bookInfo);
         } 
     }
     render() {
-        const { bookInfo, currentShelf, changeShelfHandler } = this.props;
+        const { bookInfo } = this.props;
         return (
             <div className="book">
                 <div className="book-top">
@@ -24,15 +24,12 @@ class BookInfo extends React.Component {
                     <div className="book-shelf-changer">
                         <select onChange={(event) => this.changeShelf(event)}>
                             <option value="move" disabled>Move to...</option>
-                            {shelves.map((shelf) => ( 
-                                <option 
-                                        key={shelf.type} 
-                                        value={shelf.type} 
-                                        selected={shelf.type === currentShelf.type}
-                                >
-                                        {shelf.title}
-                                </option>))}
-                            <option value="none">None</option>
+                            {shelves.map((shelf) => (
+                            <option
+                                    key={shelf.type}
+                                    value={shelf.type}
+                                    selected={shelf.type === bookInfo.shelf}
+                            >{shelf.title}</option>))}
                         </select>
                     </div>
                 </div>

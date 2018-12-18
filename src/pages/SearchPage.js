@@ -2,6 +2,7 @@ import React from 'react'
 import Search from "../components/Search";
 import BookInfo from "../components/BookInfo";
 import * as BooksAPI from "../BooksAPI";
+import {NONE_TITLE, NONE_TYPE} from "../constants/shelfType";
 
 class SearchPage extends React.Component {
     state = {
@@ -17,8 +18,17 @@ class SearchPage extends React.Component {
         BooksAPI.search(filterTerm)
             .then((response) => {
                 let result = response.length
-                    ?  response
-                    :  [];
+                    ? response.map( book => {
+                            const bookWithShelf = this.props.books.find((b) => (book.id === b.id));
+                            if (bookWithShelf){
+                                book = { ...book, shelf: bookWithShelf.shelf}
+                            }else{
+                                book = { ...book, shelf: NONE_TYPE}
+                            }
+                            return book;
+                        })
+                    :[];
+
                 this.setState({
                     searchedBooks: result
                 });
@@ -36,12 +46,10 @@ class SearchPage extends React.Component {
 
     render() {
         const booksFiltered = this.state.searchedBooks.map((book) => {
-            const bookWithShelf = this.props.books.find((b) => (b.id === book.id));
-            const shelf = bookWithShelf ? bookWithShelf.shelf : "";
             return (
                 <li key={book.id}>
                     <BookInfo bookInfo={book}
-                              currentShelf={{type: shelf, title: shelf}}
+                              currentShelf={{type: NONE_TYPE, title: NONE_TITLE}}
                               changeShelfHandler={this.props.changeShelfHandler}/>
                 </li>);
            });
