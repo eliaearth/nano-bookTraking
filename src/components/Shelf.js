@@ -13,7 +13,9 @@ class Shelf extends React.Component {
                         {
                             filteredBooks.map((book) => (
                                 <li key={book.id}>
-                                    <BookInfo bookInfo={book} currentShelf={shelfInfo} changeShelfHandler={changeShelfHandler}/>
+                                    <BookInfo bookInfo={book}
+                                              currentShelf={shelfInfo}
+                                              changeShelfHandler={changeShelfHandler}/>
                                 </li>))
                         }
                     </ol>

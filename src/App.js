@@ -32,24 +32,34 @@ class BooksApp extends React.Component {
     
   }
 
+  getAllBooks(){
+      BooksAPI.getAll()
+          .then((response) => {
+              this.setState({
+                  books: response
+              });
+          })
+          .catch((err) => {console.error(err);})
+  }
 
   componentDidMount(){
-    BooksAPI.getAll()
-      .then((response) => {
-        this.setState({
-          books: response
-        });
-      })
-      .catch((err) => {console.error(err);})
+    this.getAllBooks();
   }
 
   render() {
     return (
       <div className="app">
         <Route exact path='/' render={() => (
-          <MainPage books={this.state.books} 
-            changeShelfHandler={(x,y) => this.changeShelfHandler(x,y)}/>)}/>
-        <Route path='/search' render={() => (<SearchPage books={this.state.books}/>)}/>
+            <MainPage books={this.state.books}
+               changeShelfHandler={(x,y) => this.changeShelfHandler(x,y)}/>)}
+        />
+        <Route path='/search' render={({history}) => (
+            <SearchPage books={this.state.books}
+               changeShelfHandler={(x,y) => {
+                   this.changeShelfHandler(x,y);
+                   history.push('/');
+                 }}/>)}
+        />
       </div>
     )
   }
