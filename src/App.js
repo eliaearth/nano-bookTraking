@@ -25,10 +25,15 @@ class BooksApp extends React.Component {
         const newBook = { ...book, shelf :newShelfType};
         newBooks = [...this.state.books, newBook];
     }
-
-    this.setState({
-      books: newBooks
-    });
+    BooksAPI.update(findBook, newShelfType)
+        .then(() => {
+            this.setState({
+                books: newBooks
+            });
+        })
+        .catch((errResponse) => {
+            console.error(errResponse);
+        })
   }
 
   getAllBooks(){
