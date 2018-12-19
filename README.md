@@ -9,7 +9,7 @@ To get started:
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
-##App Functionality
+## App Functionality
 In this application, the main page displays a list of "shelves" (i.e. categories), each of which contains a number of books. The three shelves are:
 
 * Currently Reading
