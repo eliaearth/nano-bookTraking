@@ -39,7 +39,10 @@ class SearchPage extends React.Component {
             })
             .catch((err) => {
                 console.error(err);
-            })
+            });
+        !filterTerm && this.setState({
+            searchedBooks: []
+        });
     }
 
     handleChangeFilter(filter){
