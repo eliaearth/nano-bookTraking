@@ -1,5 +1,5 @@
 import React from 'react'
-import { shelves } from './../constants/shelfType'
+import {NONE_TYPE, shelves} from './../constants/shelfType'
 import './../App.css'
 
 
@@ -22,14 +22,14 @@ class BookInfo extends React.Component {
                             }}>
                     </div>
                     <div className="book-shelf-changer">
-                        <select onChange={(event) => this.changeShelf(event)}>
-                            <option value="move" disabled>Move to...</option>
-                            {shelves.map((shelf) => (
-                            <option
-                                    key={shelf.type}
-                                    value={shelf.type}
-                                    selected={shelf.type === bookInfo.shelf}
-                            >{shelf.title}</option>))}
+                        <select onChange={(event) => this.changeShelf(event)}
+                                defaultValue={bookInfo.shelf}>
+                                    <option value="move" disabled>Move to...</option>
+                                    {shelves.map((shelf) => (
+                                    <option
+                                            key={shelf.type}
+                                            value={shelf.type}
+                                    >{shelf.title}</option>))}
                         </select>
                     </div>
                 </div>
