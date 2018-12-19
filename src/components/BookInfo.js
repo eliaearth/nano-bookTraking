@@ -40,7 +40,7 @@ const BookInfo = (props) => {
 };
 
 BookInfo.propTypes = {
-    bookInfo: PropTypes.array.isRequired,
+    bookInfo: PropTypes.object.isRequired,
     currentShelf: PropTypes.object.isRequired,
     changeShelfHandler: PropTypes.func.isRequired
 };
