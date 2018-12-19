@@ -1,8 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Search from "../components/Search";
 import BookInfo from "../components/BookInfo";
 import * as BooksAPI from "../BooksAPI";
 import {NONE_TITLE, NONE_TYPE} from "../constants/shelfType";
+
 
 class SearchPage extends React.Component {
     state = {
@@ -33,7 +35,7 @@ class SearchPage extends React.Component {
                     searchedBooks: result
                 });
             }, (error) => {
-                console.log('error getting books filtered')
+                console.log(error)
             })
             .catch((err) => {
                 console.error(err);
@@ -65,5 +67,10 @@ class SearchPage extends React.Component {
         )
     }
 }
+
+SearchPage.propTypes = {
+    books: PropTypes.array.isRequired,
+    changeShelfHandler: PropTypes.func.isRequired
+};
 
 export default SearchPage

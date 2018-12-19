@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import Shelf from './../components/Shelf'
 import {shelves} from './../constants/shelfType'
+
 
 const MainPage = (props) => {
    return (
@@ -22,6 +24,11 @@ const MainPage = (props) => {
            </div>
        </div>
    );
+};
+
+MainPage.propTypes = {
+    books: PropTypes.array.isRequired,
+    changeShelfHandler: PropTypes.func.isRequired
 };
 
 export default MainPage
