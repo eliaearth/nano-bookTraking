@@ -25,7 +25,7 @@ class BooksApp extends React.Component {
         const newBook = { ...book, shelf :newShelfType};
         newBooks = [...this.state.books, newBook];
     }
-    BooksAPI.update(findBook, newShelfType)
+    BooksAPI.update(book, newShelfType)
         .then(() => {
             this.setState({
                 books: newBooks

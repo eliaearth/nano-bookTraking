@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Shelf from './../components/Shelf'
-import {shelves} from './../constants/shelfType'
+import {NONE_TYPE, shelves} from './../constants/shelfType'
 
 
 const MainPage = (props) => {
@@ -13,7 +13,7 @@ const MainPage = (props) => {
            </div>
            <div className="list-books-content">
                <div>
-                   {shelves.map((shelf) => (<Shelf key={shelf.type}
+                   {shelves.map((shelf) => (shelf.type !== NONE_TYPE && <Shelf key={shelf.type}
                                                    shelfInfo={shelf}
                                                    shelfBooks={props.books}
                                                    changeShelfHandler={props.changeShelfHandler}/>))}
